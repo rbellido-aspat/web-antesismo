@@ -930,7 +930,7 @@ def complementos() -> None:
     robots = "User-agent: *\nDisallow: /\n" if REVISION else f"User-agent: *\nAllow: /\nSitemap: {DOMINIO}/sitemap.xml\n"
     (RAIZ / "robots.txt").write_text(robots, encoding="utf-8")
     config = {
-        "trailingSlash": "always",
+        "trailingSlash": "auto",
         "routes": [{"route": "/fuente/*", "statusCode": 404}, {"route": "/README.md", "statusCode": 404}],
         "responseOverrides": {"404": {"rewrite": "/404.html", "statusCode": 404}},
         "globalHeaders": {"X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin"},
