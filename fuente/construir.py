@@ -395,7 +395,7 @@ paginas.append({
 <details><summary>¿Es un certificado de cumplimiento?</summary><div><p>No. Es un informe de salud estructural. Un edificio de 1963 puede cumplir con holgura los controles globales y no cumplir el detallamiento exigido hoy a la obra nueva, y el informe lo dice así. La norma no es retroactiva y el perfil mide la estructuración, no el cumplimiento.</p></div></details>
 <details><summary>¿Necesito el modelo de cálculo del proyecto?</summary><div><p>No. Basta el expediente municipal, que es público. Si tienes el modelo de cálculo, el trabajo es más rápido.</p></div></details>
 <details><summary>¿Qué edificios pueden evaluarse?</summary><div><p>Los rangos del perfil están calibrados con edificios chilenos de hormigón armado, en especial los estructurados con muros. Para otras tipologías, cuéntanos el caso antes de reservar.</p></div></details>
-<details><summary>¿Qué pasa con los datos del propietario?</summary><div><p>El perfil es del edificio, no de la persona. No cruzamos rol ni póliza, y los planos se borran después de un plazo definido salvo que pidas conservar el proyecto.</p></div></details>
+<details><summary>¿Qué pasa con los datos del propietario?</summary><div><p>El perfil es del edificio, no de la persona. No cruzamos rol ni póliza, y los planos y documentos se borran dentro de 90 días desde la entrega del informe, salvo que pidas por escrito conservar el proyecto.</p></div></details>
 </div>
 </div>
 </section>
