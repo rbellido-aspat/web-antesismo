@@ -1,0 +1,574 @@
+[
+{
+"n": 1,
+"nombre": "H / T",
+"unidad": "m/s",
+"grupo": "Rigidez",
+"X": 50.5613,
+"Y": 43.7766,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+20,
+"fuera"
+],
+[
+20,
+40,
+"aceptable"
+],
+[
+40,
+80,
+"normal"
+],
+[
+80,
+150,
+"aceptable"
+],
+[
+150,
+180,
+"fuera"
+]
+]
+},
+{
+"n": 2,
+"nombre": "Ho / T",
+"unidad": "m/s",
+"grupo": "Rigidez",
+"X": 50.5613,
+"Y": 43.7766,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+16,
+"fuera"
+],
+[
+16,
+32,
+"aceptable"
+],
+[
+32,
+64,
+"normal"
+],
+[
+64,
+120,
+"aceptable"
+],
+[
+120,
+150,
+"fuera"
+]
+]
+},
+{
+"n": 3,
+"nombre": "Ho / Tcr, con Tcr = 1.5 T",
+"unidad": "m/s",
+"grupo": "Rigidez",
+"X": 33.7075,
+"Y": 29.1844,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+11,
+"fuera"
+],
+[
+11,
+21,
+"aceptable"
+],
+[
+21,
+43,
+"normal"
+],
+[
+43,
+80,
+"aceptable"
+],
+[
+80,
+100,
+"fuera"
+]
+]
+},
+{
+"n": 4,
+"nombre": "Mp-delta / M basal",
+"unidad": "",
+"grupo": "Rigidez",
+"X": 0.0015,
+"Y": 0.0022,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+0.1,
+"normal"
+],
+[
+0.1,
+0.2,
+"fuera"
+]
+]
+},
+{
+"n": 5,
+"nombre": "1000 δ / H, desplazamiento de techo",
+"unidad": "por mil",
+"grupo": "Rigidez",
+"X": 0.1575,
+"Y": 0.278,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+2,
+"normal"
+],
+[
+2,
+4,
+"fuera"
+]
+]
+},
+{
+"n": 6,
+"nombre": "1000 δ / Ho",
+"unidad": "por mil",
+"grupo": "Rigidez",
+"X": 0.1575,
+"Y": 0.278,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+2,
+"normal"
+],
+[
+2,
+4,
+"fuera"
+]
+]
+},
+{
+"n": 7,
+"nombre": "1000 δu / Ho, desplazamiento agrietado de techo",
+"unidad": "por mil",
+"grupo": "Rigidez",
+"X": 2.6996,
+"Y": 3.1658,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+10,
+"normal"
+],
+[
+10,
+15,
+"aceptable"
+],
+[
+15,
+20,
+"fuera"
+]
+]
+},
+{
+"n": 8,
+"nombre": "1000 δ centro de gravedad / h",
+"unidad": "por mil",
+"grupo": "Rigidez",
+"X": 0.2195,
+"Y": 0.3869,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+2,
+"normal"
+],
+[
+2,
+4,
+"fuera"
+]
+]
+},
+{
+"n": 9,
+"nombre": "1000 δ borde / h, adicional en extremo",
+"unidad": "por mil",
+"grupo": "Rigidez",
+"X": 0.1933,
+"Y": 0.0925,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+1,
+"normal"
+],
+[
+1,
+2,
+"fuera"
+]
+]
+},
+{
+"n": 10,
+"nombre": "T rotacional / T traslacional",
+"unidad": "",
+"grupo": "Acoplamiento",
+"X": 0.7107,
+"Y": 0.6153,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+0.8,
+"normal"
+],
+[
+0.8,
+1.4,
+"aceptable"
+],
+[
+1.4,
+2.5,
+"fuera"
+]
+]
+},
+{
+"n": 11,
+"nombre": "T traslacional acoplado / T traslacional",
+"unidad": "",
+"grupo": "Acoplamiento",
+"X": 1.155,
+"Y": 0.8658,
+"cx": "aceptable",
+"cy": "aceptable",
+"bandas": [
+[
+0,
+0.8,
+"normal"
+],
+[
+0.8,
+1.2,
+"aceptable"
+],
+[
+1.2,
+1.5,
+"normal"
+],
+[
+1.5,
+2.0,
+"aceptable"
+],
+[
+2.0,
+2.5,
+"fuera"
+]
+]
+},
+{
+"n": 12,
+"nombre": "Masa rotacional acoplada / traslacional directa",
+"unidad": "",
+"grupo": "Acoplamiento",
+"X": 0.8002,
+"Y": 0.4526,
+"cx": "aceptable",
+"cy": "normal",
+"bandas": [
+[
+0,
+0.5,
+"normal"
+],
+[
+0.5,
+1.0,
+"aceptable"
+],
+[
+1.0,
+2.0,
+"fuera"
+]
+]
+},
+{
+"n": 13,
+"nombre": "Masa traslacional acoplada / traslacional directa",
+"unidad": "",
+"grupo": "Acoplamiento",
+"X": 0.6948,
+"Y": 0.3489,
+"cx": "aceptable",
+"cy": "normal",
+"bandas": [
+[
+0,
+0.5,
+"normal"
+],
+[
+0.5,
+1.0,
+"aceptable"
+],
+[
+1.0,
+2.0,
+"fuera"
+]
+]
+},
+{
+"n": 14,
+"nombre": "Q basal acoplado / Q basal directo",
+"unidad": "",
+"grupo": "Acoplamiento",
+"X": 0.5044,
+"Y": 0.415,
+"cx": "aceptable",
+"cy": "aceptable",
+"bandas": [
+[
+0,
+0.4,
+"normal"
+],
+[
+0.4,
+1.0,
+"aceptable"
+],
+[
+1.0,
+2.0,
+"fuera"
+]
+]
+},
+{
+"n": 15,
+"nombre": "M basal acoplado / M basal directo",
+"unidad": "",
+"grupo": "Acoplamiento",
+"X": 0.7178,
+"Y": 0.5786,
+"cx": "aceptable",
+"cy": "aceptable",
+"bandas": [
+[
+0,
+0.5,
+"normal"
+],
+[
+0.5,
+1.0,
+"aceptable"
+],
+[
+1.0,
+2.0,
+"fuera"
+]
+]
+},
+{
+"n": 16,
+"nombre": "(M basal directo / Q basal directo) / H, altura de la resultante",
+"unidad": "%",
+"grupo": "Acoplamiento",
+"X": 74.273,
+"Y": 75.1849,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+20,
+"fuera"
+],
+[
+20,
+40,
+"aceptable"
+],
+[
+40,
+90,
+"normal"
+],
+[
+90,
+100,
+"aceptable"
+]
+]
+},
+{
+"n": 17,
+"nombre": "(M torsor basal / Q basal directo) / H, excentricidad dinámica",
+"unidad": "%",
+"grupo": "Acoplamiento",
+"X": 35.6729,
+"Y": 17.1644,
+"cx": "fuera",
+"cy": "normal",
+"bandas": [
+[
+0,
+30,
+"normal"
+],
+[
+30,
+100,
+"fuera"
+]
+]
+},
+{
+"n": 18,
+"nombre": "Número de líneas resistentes",
+"unidad": "",
+"grupo": "Redundancia y ductilidad",
+"X": 5.0,
+"Y": 3.0,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+2,
+"fuera"
+],
+[
+2,
+3,
+"aceptable"
+],
+[
+3,
+10,
+"normal"
+]
+]
+},
+{
+"n": 19,
+"nombre": "R** = R* / (1.4 fmin fmax)",
+"unidad": "",
+"grupo": "Redundancia y ductilidad",
+"X": 4.2066,
+"Y": 4.4879,
+"cx": "aceptable",
+"cy": "aceptable",
+"bandas": [
+[
+0,
+4,
+"normal"
+],
+[
+4,
+6,
+"aceptable"
+],
+[
+6,
+10,
+"fuera"
+]
+]
+},
+{
+"n": 20,
+"nombre": "Densidad de muros, compresión",
+"unidad": "%",
+"grupo": "Densidad de muros",
+"X": 1.9895,
+"Y": 1.9895,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+0.1,
+"fuera"
+],
+[
+0.1,
+10,
+"normal"
+]
+]
+},
+{
+"n": 21,
+"nombre": "Densidad de muros, corte, por dirección",
+"unidad": "%",
+"grupo": "Densidad de muros",
+"X": 4.4939,
+"Y": 3.8176,
+"cx": "normal",
+"cy": "normal",
+"bandas": [
+[
+0,
+2,
+"fuera"
+],
+[
+2,
+10,
+"normal"
+]
+]
+}
+]

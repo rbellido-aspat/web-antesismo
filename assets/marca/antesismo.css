@@ -1,0 +1,16 @@
+/* Identidad de antesismo. Inter es opcional; Arial funciona sin descargas. */
+:root {
+  --antesismo-grafito: #263036;
+  --antesismo-verde: #297e7a;
+  --antesismo-blanco: #ffffff;
+  --antesismo-fondo: #f3f6f7;
+  --antesismo-borde: #d9e1e3;
+  --antesismo-font: "Inter", Arial, sans-serif;
+}
+.antesismo-texto { font-family: var(--antesismo-font); color: var(--antesismo-grafito); font-size: 1rem; line-height: 1.5; }
+.antesismo-logo { display: block; width: 240px; max-width: 100%; height: auto; }
+.antesismo-logo-vertical { display: block; width: 240px; max-width: 100%; height: auto; }
+.antesismo-isotipo { display: block; width: 64px; height: auto; }
+.antesismo-boton { display: inline-flex; align-items: center; padding: 12px 20px; border: 0; border-radius: 6px; background: var(--antesismo-verde); color: white; font: 600 1rem/1.25 var(--antesismo-font); text-decoration: none; }
+.antesismo-boton:focus-visible { outline: 3px solid var(--antesismo-grafito); outline-offset: 3px; }
+@media (max-width: 640px) { .antesismo-logo { width: 220px; } }
