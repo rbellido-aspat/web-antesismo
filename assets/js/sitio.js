@@ -1,4 +1,4 @@
-/* antesismo: menú móvil y formularios de la versión de revisión. */
+/* antesismo: menú móvil y formularios que preparan un correo. */
 (function () {
   "use strict";
   var boton = document.querySelector(".nav-toggle");
@@ -17,15 +17,30 @@
     });
   }
 
-  /* Los formularios aún no tienen destino de envío: se avisa en vez de perder datos. */
-  Array.prototype.forEach.call(document.querySelectorAll("form[data-pendiente]"), function (f) {
+  /* Los formularios no envían datos a ningún servidor: arman un correo y abren el programa de correo del usuario. */
+  Array.prototype.forEach.call(document.querySelectorAll("form[data-correo]"), function (f) {
     f.addEventListener("submit", function (e) {
       e.preventDefault();
       var aviso = f.querySelector(".form-estado");
+      var faltan = Array.prototype.filter.call(f.querySelectorAll("[required]"), function (c) { return !c.value.trim(); });
+      if (faltan.length) {
+        if (aviso) { aviso.textContent = "Completa los campos obligatorios: " + faltan.map(function (c) { return c.closest("label").firstChild.textContent.trim(); }).join(", ") + "."; aviso.classList.add("visible"); }
+        faltan[0].focus();
+        return;
+      }
+      var lineas = [];
+      Array.prototype.forEach.call(f.querySelectorAll("input, select, textarea"), function (c) {
+        if (!c.value.trim()) return;
+        var etiqueta = c.closest("label") ? c.closest("label").firstChild.textContent.trim() : c.name;
+        lineas.push(etiqueta + ": " + c.value.trim());
+      });
+      var url = "mailto:" + f.getAttribute("data-correo") +
+        "?subject=" + encodeURIComponent("antesismo, " + f.getAttribute("data-asunto")) +
+        "&body=" + encodeURIComponent(lineas.join("\n\n"));
+      window.location.href = url;
       if (aviso) {
-        aviso.textContent = "Gracias. Esta es la versión de revisión del sitio y el envío todavía no está conectado, así que tus datos no se guardaron.";
+        aviso.textContent = "Se abrió tu programa de correo con el mensaje listo. Si no se abrió, escribe directamente a " + f.getAttribute("data-correo") + ".";
         aviso.classList.add("visible");
-        aviso.focus();
       }
     });
   });

@@ -121,7 +121,30 @@ CONECTOR = f"""<svg viewBox="0 0 520 200" role="img" aria-labelledby="con-t">
 <text x="55" y="146" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="{G}" font-weight="600">Tu tasación</text></g>
 </svg>"""
 
-NO_ENCONTRADA = f"""<svg viewBox="0 0 320 200" role="img" aria-label="Ilustración: un edificio sobre un registro sísmico plano">
+# Firma: el informe con nombre y firma del ingeniero, sobre la silueta de los edificios
+FIRMA = f"""<svg viewBox="0 0 520 380" role="img" aria-labelledby="fir-t">
+<title id="fir-t">Ilustración: informe de antesismo con el nombre y la firma del Ing. Rodney Bellido de Luna, sobre la silueta de los edificios</title>
+<rect width="520" height="380" rx="16" fill="{S}"/>
+<g fill="none" stroke="{B}" stroke-width="10" stroke-linecap="square"><path d="M40 330V170l50-22v182"/><path d="M90 148l56 24v158"/><path d="M400 330V200l44 20v110"/></g>
+<path d="M24 330h472" stroke="{V}" stroke-width="4"/>
+<g transform="translate(150 40)">
+<path d="M0 0h180l40 40v260H0z" fill="#fff" stroke="{G}" stroke-width="8" stroke-linejoin="round"/>
+<path d="M180 0v40h40z" fill="{V}"/>
+<g font-family="Inter, Arial, sans-serif" fill="{G}">
+<text x="22" y="40" font-size="15" font-weight="700">Informe de salud</text>
+<text x="22" y="58" font-size="15" font-weight="700">estructural</text>
+</g>
+<path d="M22 84h150M22 104h170M22 124h120M22 144h160" stroke="{B}" stroke-width="6" stroke-linecap="round"/>
+<path d="M26 222c10-20 20-22 26-4s14 14 22-6 14-10 18 2 12 6 22-8" fill="none" stroke="{G}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22 240h176" stroke="{G}" stroke-width="2"/>
+<g font-family="Inter, Arial, sans-serif" fill="{G}">
+<text x="22" y="262" font-size="12.5" font-weight="700">Ing. Rodney Bellido de Luna</text>
+<text x="22" y="280" font-size="11" fill="#5f6e75">Ingeniero civil en obras civiles</text>
+</g>
+</g>
+</svg>"""
+
+NO_ENCONTRADA =f"""<svg viewBox="0 0 320 200" role="img" aria-label="Ilustración: un edificio sobre un registro sísmico plano">
 <path d="M20 170h280" stroke="{V}" stroke-width="4"/>
 <g fill="none" stroke="{G}" stroke-width="10" stroke-linecap="square"><path d="M110 170V70l40-18v118"/><path d="M150 52l46 20v98" stroke="{V}"/></g>
 </svg>"""

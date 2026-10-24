@@ -7,7 +7,7 @@ Lee los datos anonimizados del caso demostrativo en fuente/datos/ y escribe las
 páginas index.html, assets/js/datos-caso.js, sitemap.xml, robots.txt y
 staticwebapp.config.json. Las páginas comparten encabezado, pie y crédito.
 
-REVISION = True marca el sitio como versión de revisión: aviso visible, noindex
+REVISION = True marca el sitio como versión de revisión con un aviso visible; OCULTO = True pone noindex
 y robots.txt cerrado. Ponlo en False al publicar en antesismo.bdl.cl.
 VERSION se agrega a los enlaces de css y js; súbela en cada cambio de estilos.
 """
@@ -18,9 +18,21 @@ import json
 from pathlib import Path
 
 import ilustraciones as I
+import legal as L
 
 REVISION = True
-VERSION = "1.0.2"
+OCULTO = True   # noindex para buscadores y bloqueo de rastreadores de IA, hasta que Rodney avise
+CORREO = "rbellido@bdl.cl"
+ROBOTS_META = "noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai"
+# Rastreadores de buscadores e IA bloqueados de forma explícita en robots.txt
+BOTS_IA = [
+    "GPTBot", "ChatGPT-User", "OAI-SearchBot", "ClaudeBot", "Claude-User", "Claude-SearchBot", "anthropic-ai",
+    "Google-Extended", "GoogleOther", "Applebot-Extended", "PerplexityBot", "Perplexity-User", "CCBot",
+    "Bytespider", "Amazonbot", "meta-externalagent", "FacebookBot", "cohere-ai", "Diffbot", "YouBot",
+    "DuckAssistBot", "MistralAI-User", "AI2Bot", "Timpibot", "ImagesiftBot", "Omgilibot",
+    "Googlebot", "Bingbot", "Applebot", "YandexBot", "Baiduspider", "DuckDuckBot",
+]
+VERSION = "1.1.0"
 DOMINIO = "https://antesismo.bdl.cl"
 RAIZ = Path(__file__).resolve().parents[1]
 DATOS = Path(__file__).resolve().parent / "datos"
@@ -58,12 +70,16 @@ def ind(n: int) -> dict:
 NAV = [
     ("/due-diligence/", "Due diligence"),
     ("/tasadoras/", "Tasadoras"),
-    ("/caso/", "Caso demostrativo"),
+    ("/caso/", "Caso"),
     ("/perfil-bio-sismico/", "Método"),
     ("/parametros-sismicos/", "Cómo funciona"),
     ("/precios/", "Precios"),
     ("/validadores/", "Validadores"),
+    ("/quien-esta-detras/", "Quién firma"),
 ]
+
+def cotizar(asunto: str) -> str:
+    return f'mailto:{CORREO}?subject=' + asunto.replace(" ", "%20")
 
 DESCRIPTOR = "antesismo, basado en el Perfil Bío-Sísmico 3.0 de IEC Ingeniería"
 CREDITO_LARGO = (
@@ -77,7 +93,7 @@ CREDITO_LARGO = (
 
 def cabeza(p: dict) -> str:
     url = DOMINIO + p["ruta"]
-    robots = '<meta name="robots" content="noindex, nofollow">\n' if REVISION else ""
+    robots = f'<meta name="robots" content="{ROBOTS_META}">\n<meta name="googlebot" content="{ROBOTS_META}">\n' if OCULTO else ""
     ld = json.dumps(p["ld"], ensure_ascii=False)
     return f"""<!doctype html>
 <html lang="es-CL">
@@ -94,9 +110,6 @@ def cabeza(p: dict) -> str:
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#297e7a">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="/assets/marca/antesismo.css">
 <link rel="stylesheet" href="/assets/css/sitio.css?v={VERSION}">
 <meta property="og:site_name" content="antesismo">
@@ -117,7 +130,7 @@ def cabeza(p: dict) -> str:
 def encabezado(ruta: str) -> str:
     actual = ' aria-current="page"'
     enlaces = "\n".join(f'<a href="{r}"{actual if r == ruta else ""}>{t}</a>' for r, t in NAV)
-    aviso = ('<div class="aviso-revision">Versión de revisión. Textos, precios y formularios en validación; '
+    aviso = ('<div class="aviso-revision">Versión de revisión, oculta a buscadores y a rastreadores de IA; '
              'no es todavía el sitio público.</div>\n') if REVISION else ""
     return f"""<body>
 <a class="salto" href="#contenido">Saltar al contenido</a>
@@ -136,7 +149,8 @@ def encabezado(ruta: str) -> str:
 
 
 def pie(datos: bool) -> str:
-    enlaces = "\n".join(f'<a href="{r}">{t}</a>' for r, t in [("/", "Inicio")] + NAV + [("/legal/", "Términos y privacidad")])
+    enlaces = "\n".join(f'<a href="{r}">{t}</a>' for r, t in [("/", "Inicio")] + NAV
+                        + [("/legal/#terminos", "Términos de uso"), ("/legal/#privacidad", "Política de privacidad")])
     scripts = f'<script src="/assets/js/datos-caso.js?v={VERSION}"></script>\n<script src="/assets/js/perfil.js?v={VERSION}"></script>\n' if datos else ""
     return f"""</main>
 <section class="credito" aria-labelledby="credito-t">
@@ -151,11 +165,12 @@ def pie(datos: bool) -> str:
 <div>
 <img src="/assets/marca/antesismo_isologo_horizontal_blanco.svg" alt="antesismo" width="220" height="42">
 <p>Due diligence sísmico en días, desde los planos municipales.</p>
+<p>Ing. Rodney Bellido de Luna<br><a href="mailto:{CORREO}">{CORREO}</a></p>
 </div>
 <nav aria-label="Pie de página">
 {enlaces}
 </nav>
-<p class="final">antesismo.bdl.cl · Proyecto de Rodney Bellido de Luna, ingeniero civil en obras civiles · Cada resultado lleva la leyenda: no es revisión estructural ni certificación de cumplimiento normativo.</p>
+<p class="final">antesismo.bdl.cl · Proyecto de Rodney Bellido de Luna, ingeniero civil en obras civiles · <a href="mailto:{CORREO}">{CORREO}</a> · Cada resultado lleva la leyenda: no es revisión estructural ni certificación de cumplimiento normativo.</p>
 </div>
 </footer>
 <script src="/assets/js/sitio.js?v={VERSION}"></script>
@@ -165,11 +180,11 @@ def pie(datos: bool) -> str:
 
 
 def formulario(ident: str, titulo: str, campos: str, boton: str) -> str:
-    return f"""<form class="formulario panel-blanco" id="{ident}-form" data-pendiente aria-labelledby="{ident}-t" novalidate>
+    return f"""<form class="formulario panel-blanco" id="{ident}-form" data-correo="{CORREO}" data-asunto="{titulo}" aria-labelledby="{ident}-t" novalidate>
 <h3 id="{ident}-t" class="mt-0">{titulo}</h3>
 {campos}
 <button class="boton" type="submit">{boton}</button>
-<p class="nota mb-0">Sin pago y sin compromiso. Usamos tus datos solo para responderte. <span class="pendiente">Envío en configuración</span></p>
+<p class="nota mb-0">Sin pago y sin compromiso. Al enviar se abre tu programa de correo con el mensaje listo para {CORREO}; este sitio no guarda tus datos. Lee la <a href="/legal/#privacidad">política de privacidad</a>.</p>
 <div class="form-estado" role="status" tabindex="-1"></div>
 </form>"""
 
@@ -290,6 +305,20 @@ paginas.append({
 </div>
 </section>
 
+<section class="seccion oscura">
+<div class="contenedor dos-col">
+<div>
+<h2>Quién está detrás</h2>
+<p>antesismo lo desarrolla y lo firma el Ing. Rodney Bellido de Luna, ingeniero civil en obras civiles de la Universidad Central de Chile. Revisa cada inventario de muros, cada supuesto y cada resultado, y responde por su trabajo profesional.</p>
+<p class="mb-0"><a href="/quien-esta-detras/">Biografía y responsabilidad</a> · <a href="mailto:{CORREO}">{CORREO}</a></p>
+</div>
+<div>
+<h3>Crédito abierto</h3>
+<p class="mb-0">El método es el Perfil Bío-Sísmico de Edificios de Tomás Guendelman e IEC Ingeniería. antesismo lo aplica con crédito directo a sus autores, desde los planos municipales.</p>
+</div>
+</div>
+</section>
+
 <section class="seccion suave">
 <div class="contenedor">
 <div class="seccion-cabeza"><h2>Para quién es</h2></div>
@@ -353,7 +382,7 @@ paginas.append({
 <li><span class="dia">Día 3</span><p>Cálculo: modelo de piso rígido, 21 indicadores, controles de norma y factores de daño de referencia.</p></li>
 <li><span class="dia">Día 4 a 7</span><p>Revisión y firma del ingeniero, informe final con daño esperado y reunión de lectura de 30 minutos.</p></li>
 </ol>
-<p class="pequeño mb-0" style="margin-top:12px">Precio por edificio y operación: por definir. <a href="/precios/">Ver precios y pre-venta</a>.</p>
+<p class="pequeño mb-0" style="margin-top:12px">Precio por edificio y operación: <a href="{cotizar('Cotización informe de due diligence')}">Enviar email por cotizar</a>.</p>
 </div>
 </div>
 </section>
@@ -362,7 +391,7 @@ paginas.append({
 <div class="contenedor">
 <div class="seccion-cabeza"><h2>Preguntas que nos hacen</h2></div>
 <div class="preguntas">
-<details open><summary>¿Quién firma?</summary><div><p>El Ing. Rodney Bellido de Luna, ingeniero civil en obras civiles de la Universidad Central de Chile. Revisa el inventario de muros y el resultado, y firma el informe bajo su responsabilidad profesional.</p></div></details>
+<details open><summary>¿Quién firma?</summary><div><p>El Ing. Rodney Bellido de Luna, ingeniero civil en obras civiles de la Universidad Central de Chile. Revisa el inventario de muros y el resultado, y firma el informe bajo su responsabilidad profesional. <a href="/quien-esta-detras/">Conoce quién está detrás de antesismo</a>.</p></div></details>
 <details><summary>¿Es un certificado de cumplimiento?</summary><div><p>No. Es un informe de salud estructural. Un edificio de 1963 puede cumplir con holgura los controles globales y no cumplir el detallamiento exigido hoy a la obra nueva, y el informe lo dice así. La norma no es retroactiva y el perfil mide la estructuración, no el cumplimiento.</p></div></details>
 <details><summary>¿Necesito el modelo de cálculo del proyecto?</summary><div><p>No. Basta el expediente municipal, que es público. Si tienes el modelo de cálculo, el trabajo es más rápido.</p></div></details>
 <details><summary>¿Qué edificios pueden evaluarse?</summary><div><p>Los rangos del perfil están calibrados con edificios chilenos de hormigón armado, en especial los estructurados con muros. Para otras tipologías, cuéntanos el caso antes de reservar.</p></div></details>
@@ -751,7 +780,8 @@ paginas.append({
 <div class="contenedor">
 <span class="etiqueta">Pre-venta</span>
 <h1>Precios y pre-venta</h1>
-<p class="intro">Tres formas de usar antesismo. Los precios se fijan con las primeras reservas; reservar no tiene costo ni compromiso.</p>
+<p class="intro">Tres formas de usar antesismo. Cada una se cotiza según el edificio, la cartera o el volumen. Escríbenos y te respondemos con la cotización; pedirla no tiene costo ni compromiso.</p>
+<p><a class="boton" href="{cotizar('Cotización antesismo')}">Enviar email por cotizar</a></p>
 </div>
 </section>
 
@@ -762,7 +792,7 @@ paginas.append({
 <span class="etiqueta">Due diligence</span>
 <h3>Informe firmado</h3>
 <p>Para abogados, fondos y compradores de un edificio.</p>
-<div class="precio">Por edificio y operación<small>Precio por definir</small></div>
+<div class="precio">Por edificio y operación<small><a href="{cotizar('Cotización informe de due diligence')}">Enviar email por cotizar</a></small></div>
 <ul class="lista-check"><li>21 indicadores con semáforo</li><li>Controles globales separados del detallamiento</li><li>Daño esperado de referencia</li><li>Firma de ingeniero civil, en cuatro a siete días</li></ul>
 <a class="boton" href="#reserva">Reservar informe de prueba</a>
 </div>
@@ -770,7 +800,7 @@ paginas.append({
 <span class="etiqueta">Tasadoras y proptech</span>
 <h3>Conector por dirección</h3>
 <p>Para tasadoras con IA, proptech y bancos hipotecarios.</p>
-<div class="precio">Por llamada a la API<small>Precio por definir; reparto con el banco o la plataforma a conversar</small></div>
+<div class="precio">Por llamada a la API<small><a href="{cotizar('Cotización conector para tasadoras')}">Enviar email por cotizar</a></small></div>
 <ul class="lista-check"><li>Perfil y daño esperado por dirección</li><li>Trazabilidad de cada resultado</li><li>PDF firmado opcional</li><li>Cobertura por comunas acordadas</li></ul>
 <a class="boton-sec" href="/tasadoras/#lista">Unirse a la lista de espera</a>
 </div>
@@ -778,7 +808,7 @@ paginas.append({
 <span class="etiqueta">Aseguradoras y reaseguro</span>
 <h3>Piloto cofinanciado</h3>
 <p>Un dato de riesgo por edificio para suscripción y selección de riesgos.</p>
-<div class="precio">De 10 a 150 edificios<small>Luego, licencia anual por cartera; precio por definir</small></div>
+<div class="precio">De 10 a 150 edificios<small><a href="{cotizar('Cotización piloto para aseguradoras')}">Enviar email por cotizar</a></small></div>
 <ul class="lista-check"><li>Calibración del daño con tus siniestros de 2010 y 2015</li><li>Exclusividad temporal</li><li>Informe por edificio y resumen de cartera</li></ul>
 <a class="boton-sec" href="#reserva">Conversar un piloto</a>
 </div>
@@ -870,27 +900,29 @@ paginas.append({
 # ---------------------------------------------------------------- Legal
 paginas.append({
     "ruta": "/legal/",
-    "titulo": "Términos de uso y privacidad | antesismo",
-    "descripcion": "Términos de uso, privacidad y retención de planos de antesismo. Documentos en redacción.",
-    "ld": ld_articulo("Términos de uso y privacidad", "Estado de los términos de uso y la política de privacidad.", "/legal/"),
+    "titulo": "Términos de uso y política de privacidad | antesismo",
+    "descripcion": "Términos de uso de antesismo y política de privacidad conforme a la Ley 19.628 y la Ley 21.719 de protección de datos personales de Chile.",
+    "ld": ld_articulo("Términos de uso y política de privacidad", "Términos de uso y política de privacidad de antesismo.", "/legal/"),
     "datos": False,
-    "cuerpo": """
-<section class="heroe">
-<div class="contenedor">
-<span class="etiqueta">Legal</span>
-<h1>Términos de uso y privacidad</h1>
-<p class="intro">Los términos de uso y la política de privacidad están en redacción con asesoría legal y se publicarán antes de recibir datos o pagos. Mientras tanto, rige lo siguiente.</p>
-</div>
-</section>
-<section class="seccion" style="padding-top:8px">
-<div class="contenedor rejilla-2">
-<div class="tarjeta"><h3>Alcance de los resultados</h3><p>Los resultados de antesismo no son revisión estructural ni certificación de cumplimiento normativo. El perfil mide la estructuración del edificio y el daño esperado es referencia, con calibración en curso.</p></div>
-<div class="tarjeta"><h3>Datos personales</h3><p>La política de privacidad se ajustará a la Ley 21.719 de protección de datos personales. Los formularios de esta versión de revisión no guardan datos.</p></div>
-<div class="tarjeta"><h3>Planos que subas</h3><p>La política de retención de planos está por definir. Se publicará el plazo de borrado antes de recibir el primer expediente.</p></div>
-<div class="tarjeta"><h3>Método</h3><p>El Perfil Bío-Sísmico de Edificios es obra de Tomás Guendelman e IEC Ingeniería. antesismo no es un sitio de IEC Ingeniería ni está avalado por sus autores.</p></div>
-</div>
-</section>
-""",
+    "cuerpo": L.legal(CORREO),
+})
+
+# ---------------------------------------------------------------- Quién está detrás
+paginas.append({
+    "ruta": "/quien-esta-detras/",
+    "titulo": "Quién está detrás de antesismo: Ing. Rodney Bellido de Luna | antesismo",
+    "descripcion": "Ing. Rodney Bellido de Luna, ingeniero civil en obras civiles de la Universidad Central de Chile, desarrolla antesismo y firma cada informe. Biografía y responsabilidad profesional.",
+    "ld": {
+        "@context": "https://schema.org", "@type": "ProfilePage", "url": DOMINIO + "/quien-esta-detras/",
+        "mainEntity": {
+            "@type": "Person", "name": "Rodney Bellido de Luna", "honorificPrefix": "Ing.",
+            "jobTitle": "Ingeniero civil en obras civiles", "email": "mailto:" + CORREO,
+            "alumniOf": {"@type": "CollegeOrUniversity", "name": "Universidad Central de Chile"},
+            "sameAs": ["https://www.linkedin.com/in/rbellido/"],
+        },
+    },
+    "datos": False,
+    "cuerpo": L.quien(CORREO, I.FIRMA),
 })
 
 
@@ -927,7 +959,11 @@ def datos_js() -> None:
 def complementos() -> None:
     urls = "\n".join(f"  <url><loc>{DOMINIO}{p['ruta']}</loc><lastmod>2026-10-24</lastmod></url>" for p in paginas)
     (RAIZ / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n', encoding="utf-8")
-    robots = "User-agent: *\nDisallow: /\n" if REVISION else f"User-agent: *\nAllow: /\nSitemap: {DOMINIO}/sitemap.xml\n"
+    if OCULTO:
+        robots = ("# Sitio en revisión: cerrado a buscadores y a rastreadores de IA.\n"
+                  + "".join(f"User-agent: {b}\n" for b in BOTS_IA) + "Disallow: /\n\nUser-agent: *\nDisallow: /\n")
+    else:
+        robots = f"User-agent: *\nAllow: /\nSitemap: {DOMINIO}/sitemap.xml\n"
     (RAIZ / "robots.txt").write_text(robots, encoding="utf-8")
     config = {
         "trailingSlash": "auto",
@@ -936,8 +972,8 @@ def complementos() -> None:
         "globalHeaders": {"X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin"},
         "mimeTypes": {".webmanifest": "application/manifest+json"},
     }
-    if REVISION:
-        config["globalHeaders"]["X-Robots-Tag"] = "noindex, nofollow"
+    if OCULTO:
+        config["globalHeaders"]["X-Robots-Tag"] = ROBOTS_META
     (RAIZ / "staticwebapp.config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 

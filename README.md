@@ -16,7 +16,8 @@ Sitio estático publicado con Azure Static Web Apps. Cada push a `main` desplieg
 | `/parametros-sismicos/` | Cómo funciona |
 | `/precios/` | Precios y pre-venta |
 | `/validadores/` | Validadores e inversionistas |
-| `/legal/` | Términos y privacidad, en redacción |
+| `/quien-esta-detras/` | Biografía y responsabilidad del Ing. Rodney Bellido de Luna |
+| `/legal/` | Términos de uso y política de privacidad (Ley 19.628 y Ley 21.719), borrador para revisión legal |
 
 Las páginas se generan con `fuente/construir.py` (Python 3.12, sin dependencias):
 
@@ -28,7 +29,13 @@ El generador lee `fuente/datos/` (perfil de 21 indicadores y geometría del caso
 
 ## Versión de revisión
 
-`REVISION = True` en `fuente/construir.py` muestra el aviso de versión de revisión, agrega `noindex` y cierra `robots.txt`. Ponlo en `False` y vuelve a generar al publicar en antesismo.bdl.cl. Los formularios no tienen destino de envío todavía y avisan al usuario.
+En `fuente/construir.py`:
+
+- `REVISION = True` muestra el aviso de versión de revisión.
+- `OCULTO = True` agrega `noindex, noai` en cada página y en la cabecera `X-Robots-Tag`, y cierra `robots.txt` a todos los rastreadores, con los de IA nombrados uno por uno. Se cambia a `False` solo cuando Rodney lo indique.
+- `CORREO` es el correo de contacto del pie, de la página de quién está detrás y de los formularios.
+
+Los formularios no envían datos a ningún servidor: abren el programa de correo del visitante con el mensaje listo. Los textos legales y la biografía están en `fuente/legal.py`.
 
 ## Marca
 
